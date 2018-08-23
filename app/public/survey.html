@@ -229,17 +229,34 @@
 </body>
 
 <script>
+    const questionIds = []
+
     $('#reset').hide()
     $('#reset').on('click', function(){
-       // $(this).hide()
-       // $('#submit').removeClass("disabled")
        $('body').scrollTop(0)
        location.reload(true)
-       
     })
 
+    for(let i = 1; i < 11; i++){
+        let questionId = `#q${i}`
+        questionIds.push(questionId)
+        $(questionId).slider().on('change', function(e){
+            let resultDiv = $(questionId + 'Result')
+            let value = roundVal(e.value.newValue)
+            $(this).addClass('answered')
+            sliderResult(value, function(color, text, txtColor){
+                $(`#p${i}`).css('border-color', color)
+                resultDiv.css({
+                    'background-color': color,
+                    'color': txtColor
+                })
+                .html(text)
+            })
+        })
+    }
+
     // initiate sliders, add 'slide' event listener
-    $('#q1').slider().on('change', function(e){
+   /* $('#q1').slider().on('change', function(e){
         var resultDiv = $('#q1Result')
         var value = roundVal(e.value.newValue)
         $(this).addClass('answered')
@@ -337,7 +354,7 @@
             $('#p10').css("border-color", color)
             resultDiv.css({"background-color": color, "color": txtColor}).html(text)
         })
-    })
+    })*/
     
 
     // change picture textbox if it's not a url
@@ -429,10 +446,15 @@ $('#submit').on('click', function(){
     } else {
         $('#message').empty()
         // get the user answers
-        var answers = {
+        let scores = questionIds.map(qId => {
+            return $(qId).slider('getValue')
+          
+        })
+        
+        let answers = {
             name: $('#name').val().trim(),
             photo: picUrl,
-            scores: [       
+            scores: scores/*[       
                     $('#q1').slider('getValue'),
                     $('#q2').slider('getValue'),
                     $('#q3').slider('getValue'),
@@ -443,7 +465,7 @@ $('#submit').on('click', function(){
                     $('#q8').slider('getValue'),
                     $('#q9').slider('getValue'),
                     $('#q10').slider('getValue')
-                    ]
+                    ]*/
         }
     
         // send the answers to the server
