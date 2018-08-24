@@ -1,13 +1,24 @@
 # FriendFinder
-GT Coding Bootcamp Week 13 Homework: Friend Matching App (using node, express, heroku)
 
-Welcome to Friend Finder!
+Welcome to [FriendFinder!](https://gtcbc-friendfinder.herokuapp.com/)
 Take the 10-question survey and we'll match you with a friend... no wrong answers here!
 
-Technologies used:
-- Nodejs
-- Expressjs
-- Heroku
-- The usual suspects (JavaScript, jQuery, Bootstrap)
-- Theme is "Flatly" from Bootswatch
-- Sliders are from Bootstrap-Slider.js by seiyria
+## Built With
+
+* [Nodejs](https://nodejs.org/en/)
+* [bootstrap-slider](https://github.com/seiyria/bootstrap-slider) - The sliders
+* [Expressjs](https://expressjs.com/) - Expressjs routing
+* [Bootswatch](https://bootswatch.com/) - "Flatly" Bootstrap theme
+
+## Authors
+
+* **Josh Parker** - [GitHub](https://github.com/jthomasparker)
+
+## License
+
+N/A
+
+## Acknowledgments
+
+* Hat tip to Georgia Tech Coding Bootcamp for this fun exercise
+

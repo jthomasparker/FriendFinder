@@ -230,13 +230,7 @@
 
 <script>
     const questionIds = []
-
-    $('#reset').hide()
-    $('#reset').on('click', function(){
-       $('body').scrollTop(0)
-       location.reload(true)
-    })
-
+    // initiate sliders
     for(let i = 1; i < 11; i++){
         let questionId = `#q${i}`
         questionIds.push(questionId)
@@ -255,107 +249,12 @@
         })
     }
 
-    // initiate sliders, add 'slide' event listener
-   /* $('#q1').slider().on('change', function(e){
-        var resultDiv = $('#q1Result')
-        var value = roundVal(e.value.newValue)
-        $(this).addClass('answered')
-        sliderResult(value, function(color, text, txtColor){
-            $('#p1').css("border-color", color)
-            resultDiv.css({"background-color": color, "color": txtColor}).html(text)
-        })
+    $('#reset').hide()
+    $('#reset').on('click', function(){
+       $('body').scrollTop(0)
+       location.reload(true)
     })
 
-    $('#q2').slider().on('change', function(e){
-        var resultDiv = $('#q2Result')
-        var value = roundVal(e.value.newValue)
-        $(this).addClass('answered')
-        sliderResult(value, function(color, text, txtColor){
-            $('#p2').css("border-color", color)
-            resultDiv.css({"background-color": color, "color": txtColor}).html(text)
-        })
-    })
-
-    $('#q3').slider().on('change', function(e){
-        var resultDiv = $('#q3Result')
-        var value = roundVal(e.value.newValue)
-        $(this).addClass('answered')
-        sliderResult(value, function(color, text, txtColor){
-            $('#p3').css("border-color", color)
-            resultDiv.css({"background-color": color, "color": txtColor}).html(text)
-        })
-    })
-
-    $('#q4').slider().on('change', function(e){
-        var resultDiv = $('#q4Result')
-        var value = roundVal(e.value.newValue)
-        $(this).addClass('answered')
-        sliderResult(value, function(color, text, txtColor){
-            $('#p4').css("border-color", color)
-            resultDiv.css({"background-color": color, "color": txtColor}).html(text)
-        })
-    })
-
-    $('#q5').slider().on('change', function(e){
-        var resultDiv = $('#q5Result')
-        var value = roundVal(e.value.newValue)
-        $(this).addClass('answered')
-        sliderResult(value, function(color, text, txtColor){
-            $('#p5').css("border-color", color)
-            resultDiv.css({"background-color": color, "color": txtColor}).html(text)
-        })
-    })
-
-    $('#q6').slider().on('change', function(e){
-        var resultDiv = $('#q6Result')
-        var value = roundVal(e.value.newValue)
-        $(this).addClass('answered')
-        sliderResult(value, function(color, text, txtColor){
-            $('#p6').css("border-color", color)
-            resultDiv.css({"background-color": color, "color": txtColor}).html(text)
-        })
-    })
-
-    $('#q7').slider().on('change', function(e){
-        var resultDiv = $('#q7Result')
-        var value = roundVal(e.value.newValue)
-        $(this).addClass('answered')
-        sliderResult(value, function(color, text, txtColor){
-            $('#p7').css("border-color", color)
-            resultDiv.css({"background-color": color, "color": txtColor}).html(text)
-        })
-    })
-
-    $('#q8').slider().on('change', function(e){
-        var resultDiv = $('#q8Result')
-        var value = roundVal(e.value.newValue)
-        $(this).addClass('answered')
-        sliderResult(value, function(color, text, txtColor){
-            $('#p8').css("border-color", color)
-            resultDiv.css({"background-color": color, "color": txtColor}).html(text)
-        })
-    })
-
-    $('#q9').slider().on('change', function(e){
-        var resultDiv = $('#q9Result')
-        var value = roundVal(e.value.newValue)
-        $(this).addClass('answered')
-        sliderResult(value, function(color, text, txtColor){
-            $('#p9').css("border-color", color)
-            resultDiv.css({"background-color": color, "color": txtColor}).html(text)
-        })
-    })
-
-    $('#q10').slider().on('change', function(e){
-        var resultDiv = $('#q10Result')
-        var value = roundVal(e.value.newValue)
-        $(this).addClass('answered')
-        sliderResult(value, function(color, text, txtColor){
-            $('#p10').css("border-color", color)
-            resultDiv.css({"background-color": color, "color": txtColor}).html(text)
-        })
-    })*/
-    
 
     // change picture textbox if it's not a url
     $('#pic').on('change', function(){
@@ -426,21 +325,20 @@ function roundVal(value){
     return value;
 }
 
-// submit button event listener
+// submit button event handler
 $('#submit').on('click', function(){
     if($(this).hasClass("disabled")){
         return;
     }
     event.preventDefault();
-    var picUrl = $('#pic').val().trim()
+    const picUrl = $('#pic').val().trim()
     // see if anything was unanswered
-    var unanswered = testAnswers();
+    const unanswered = testAnswers();
     // vaidate the picture url
-    var isValidUrl = testUrl(picUrl);
+    const isValidUrl = testUrl(picUrl);
     // if any of the validation fails, update #message
     if(unanswered.length > 0){
-        var message = "You didn't answer: " + unanswered.join(", ")
-        $('#message').html(message)
+        $('#message').html("You didn't answer: " + unanswered.join(", "))
     } else if(!isValidUrl){
         $('#message').html(picUrl + " is not a valid URL.<br>Please enter a valid URL")
     } else {
@@ -448,24 +346,12 @@ $('#submit').on('click', function(){
         // get the user answers
         let scores = questionIds.map(qId => {
             return $(qId).slider('getValue')
-          
         })
         
         let answers = {
             name: $('#name').val().trim(),
             photo: picUrl,
-            scores: scores/*[       
-                    $('#q1').slider('getValue'),
-                    $('#q2').slider('getValue'),
-                    $('#q3').slider('getValue'),
-                    $('#q4').slider('getValue'),
-                    $('#q5').slider('getValue'),
-                    $('#q6').slider('getValue'),
-                    $('#q7').slider('getValue'),
-                    $('#q8').slider('getValue'),
-                    $('#q9').slider('getValue'),
-                    $('#q10').slider('getValue')
-                    ]*/
+            scores: scores
         }
     
         // send the answers to the server
@@ -493,7 +379,11 @@ $('#submit').on('click', function(){
                     var userAnswer = answers.scores[i]
                     var compare = ("<center><h3>Your Answer: " + userAnswer + "  |  \
                                     "  + result[0].name + "'s Answer: " + result[0].scores[i] + "</h3></center>")
-                    resultDiv.css({'background-color': '#2c3e50', 'color': '#ffffff'}).html(compare)
+                    resultDiv.css(
+                        {
+                        'background-color': '#2c3e50', 'color': '#ffffff'
+                        }
+                    ).html(compare)
                     qPanel.css('border-color', '#2c3e50')
                     $('#q' + questionNum).slider("disable")
                     $('#submit').addClass('disabled')
